@@ -8,6 +8,8 @@ const cors = require("cors");
 const port = process.env.PORT || 3000;
 const pool = require("./db/db");
 const bodyParser = require("body-parser");
+const status = require("./routes/status/status");
+const getClusters = require("./routes/cluster/get-clusters");
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,6 +23,9 @@ app.use(function (req, res, next) {
 
 app.use(cors());
 app.use(express.json());
+app.use(status);
+
+app.use("/clusters", getClusters);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
