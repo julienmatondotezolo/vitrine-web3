@@ -49,3 +49,13 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });
+
+const getFavoritesByUser = require("./routes/favorites/getByUser");
+const storeOrDestroyFavorite = require("./routes/favorites/storeOrDestroy");
+const getLikesByUser = require("./routes/likes/getByUser");
+const storeOrDestroyLike = require("./routes/likes/storeOrDestroy");
+
+app.use("/likes", getLikesByUser);
+app.use("/likes", storeOrDestroyLike);
+app.use("/favorite", getFavoritesByUser);
+app.use("/favorite", storeOrDestroyFavorite);
