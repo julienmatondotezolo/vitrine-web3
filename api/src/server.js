@@ -59,3 +59,11 @@ app.use("/likes", getLikesByUser);
 app.use("/likes", storeOrDestroyLike);
 app.use("/favorite", getFavoritesByUser);
 app.use("/favorite", storeOrDestroyFavorite);
+
+const getUsers = require('./routes/users/get-users')
+const createUser = require('./routes/users/create-user')
+const getUserByid = require('./routes/users/get-user-by-id')
+
+app.use("/users/", getUsers);
+app.use("/user", createUser);
+app.use("/user/id", getUserByid);

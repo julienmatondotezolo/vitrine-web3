@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../../db/db");
-const status = require("../status/status");
 
 router.post("/", async (req, res) => {
   let { projectName, description, url, images, cluster } = req.body;
