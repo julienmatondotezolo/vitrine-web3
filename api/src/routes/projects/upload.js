@@ -10,7 +10,7 @@ cloudinary.config({
     secure: true
   });
 
-router.post("/upload", async (req, res) => {
+router.get("/upload", async (req, res) => {
     const image = req.body
     console.log(image)
 
