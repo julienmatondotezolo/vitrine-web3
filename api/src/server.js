@@ -92,6 +92,7 @@ app.use("/user/id", getUserByid);
 
 const register = require('./routes/auth/register')
 const login = require("./routes/auth/login");
+const logout = require("./routes/auth/logout");
 
 app.use("/register", register);
-app.use("/login", login);
+app.use("/logout", logout);
