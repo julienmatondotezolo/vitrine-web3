@@ -13,6 +13,8 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const status = require("./routes/status/status");
+
+const uploadImage = require("./routes/projects/upload"); 
 const getClusters = require("./routes/cluster/get-clusters");
 const getProjects = require("./routes/projects/get-projects");
 const getProjectByName = require("./routes/projects/get-project-by-name");
@@ -53,6 +55,7 @@ app.use(passport.session());
 
 require("./routes/auth/passport")(passport);
 
+app.use("/upload", uploadImage);
 app.use("/clusters", getClusters);
 app.use("/projects", getProjects);
 app.use("/project", createProject);
