@@ -7,7 +7,11 @@ const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 3000;
 const pool = require("./db/db");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
 const bodyParser = require("body-parser");
+const flash = require("connect-flash");
 const status = require("./routes/status/status");
 const getClusters = require("./routes/cluster/get-clusters");
 const getProjects = require("./routes/projects/get-projects");
@@ -31,6 +35,23 @@ app.use(function (req, res, next) {
 app.use(cors());
 app.use(express.json());
 app.use(status);
+app.use(flash());
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    cookie: { maxAge: oneDay },
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./routes/auth/passport")(passport);
 
 app.use("/clusters", getClusters);
 app.use("/projects", getProjects);
@@ -67,3 +88,10 @@ const getUserByid = require('./routes/users/get-user-by-id')
 app.use("/users/", getUsers);
 app.use("/user", createUser);
 app.use("/user/id", getUserByid);
+
+
+const register = require('./routes/auth/register')
+const login = require("./routes/auth/login");
+
+app.use("/register", register);
+app.use("/login", login);
