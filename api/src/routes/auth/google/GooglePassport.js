@@ -3,6 +3,8 @@ const passport =require("passport")
 
 
 router.get('/profile', passport.authenticate('google', { scope: ['profile'] }))
+
+
 router.get(
         '/auth/google/callback',
         passport.authenticate('google', { failureRedirect: '/signin' }),

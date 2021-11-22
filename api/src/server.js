@@ -98,4 +98,5 @@ const login = require("./routes/auth/login");
 const logout = require("./routes/auth/logout");
 
 app.use("/register", register);
+app.use("/login", login);
 app.use("/logout", logout);
