@@ -4,7 +4,7 @@ const pool = require("../../db/db");
 
 router.post("/", async (req, res) => {
   let { projectId } = req.body;
-  let userId = 1;
+  let userId = req.session.passport.user.userid;
   // let values = [projectId, userId];
 
   if (await check(projectId, userId)) {
