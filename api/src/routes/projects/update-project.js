@@ -16,24 +16,37 @@ router.put("/:id", async (req, res) => {
     ); // Search the project that you want to update
 
     // Check to see if the project that you want to update is yours (you can't update other people's projects)
-    if (
-      selectedProjectSQL.rows[0].user_id ==
-      userId /*req.user.userid temporary set to userId*/
-    ) {
-      //  The project belongs to the logged user.
+    if (selectedProjectSQL.rows.length) {
+      if (
+        selectedProjectSQL.rows[0].user_id ==
+        userId /*req.user.userid temporary set to userId*/
+      ) {
+        //  The project belongs to the logged user.
 
-      const updateProduct = await pool.query(
-        "UPDATE projects SET user_id = $1, edit_date = $2, images = $3, url = $4,description = $5, cluster_id = $6,  name = $7 WHERE projectid = $8",
-        [userId, edit_date, images, url, description, cluster, projectName, id]
-      );
+        const updateProduct = await pool.query(
+          "UPDATE projects SET user_id = $1, edit_date = $2, images = $3, url = $4,description = $5, cluster_id = $6,  name = $7 WHERE projectid = $8",
+          [
+            userId,
+            edit_date,
+            images,
+            url,
+            description,
+            cluster,
+            projectName,
+            id,
+          ]
+        );
 
-      res.sendCustomStatus(
-        200,
-        `The project "${selectedProjectSQL.rows[0].name}" with id ${id} is updated!!`
-      );
+        res.sendCustomStatus(
+          200,
+          `The project "${selectedProjectSQL.rows[0].name}" with id ${id} is updated!!`
+        );
+      } else {
+        //  The project does not exists or don't belongs to the logged user.
+        res.sendCustomStatus(400);
+      }
     } else {
-      //  The project does not exists or don't belongs to the logged user.
-      res.sendCustomStatus(400);
+      res.sendCustomStatus(400, "Project doesn't exists.");
     }
   } catch (err) {
     console.error(err.message);
