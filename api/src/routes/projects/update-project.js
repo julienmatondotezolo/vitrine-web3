@@ -5,7 +5,9 @@ const pool = require("../../db/db");
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId, images, url, description, cluster, projectName } = req.body;
+    const { images, url, description, cluster, projectName } = req.body;
+    const userId = req.session.passport.user.userid;
+    console.log(userId);
     let edit_date = new Date().toISOString().slice(0, 19).replace("T", " ");
 
     const selectedProjectSQL = await pool.query(
@@ -27,7 +29,7 @@ router.put("/:id", async (req, res) => {
 
       res.sendCustomStatus(
         200,
-        `The project "${selectedProjectSQL.rows[0].name}" with id ${id} is updated!`
+        `The project "${selectedProjectSQL.rows[0].name}" with id ${id} is updated!!`
       );
     } else {
       //  The project does not exists or don't belongs to the logged user.
