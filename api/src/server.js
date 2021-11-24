@@ -14,7 +14,15 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const status = require("./routes/status/status");
 
-const uploadImage = require("./routes/projects/upload"); 
+const cloudinary = require('cloudinary').v2
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
+  });
+
+// const uploadImage = require("./routes/projects/upload"); 
 const getClusters = require("./routes/cluster/get-clusters");
 const getProjects = require("./routes/projects/get-projects");
 const getProjectByName = require("./routes/projects/get-project-by-name");
@@ -41,6 +49,7 @@ app.use(flash());
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.bodyParser({limit: '50mb'}));
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
@@ -55,7 +64,7 @@ app.use(passport.session());
 
 require("./routes/auth/passport")(passport);
 
-app.use("/upload", uploadImage);
+// app.use("/upload", uploadImage);
 app.use("/clusters", getClusters);
 app.use("/projects", getProjects);
 app.use("/project", createProject);
@@ -68,6 +77,19 @@ app.use("/projects-user", getProjectsUser);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
+});
+
+app.post("/upload", (req, res) => {
+  const image = req.body
+  console.log("REQUEST: ", req.body)
+
+  // var cloudinary = require('cloudinary')
+  // cloudinary.uploader.upload("my_picture.jpg",
+  //     function (result) {
+  //         console.log(result)
+  //     })
+
+  res.send("Ok")
 });
 
 app.listen(port, () => {
