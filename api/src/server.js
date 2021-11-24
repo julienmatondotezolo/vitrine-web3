@@ -14,13 +14,29 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const status = require("./routes/status/status");
 
+const multer = require('multer');
 const cloudinary = require('cloudinary').v2
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true
-  });
+const {
+  CloudinaryStorage
+} = require('multer-storage-cloudinary');
+// const cloudinary = require('cloudinary')
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'projecten',
+  },
+});
+
+const parser = multer({
+  storage: storage
+});
 
 // const uploadImage = require("./routes/projects/upload"); 
 const getClusters = require("./routes/cluster/get-clusters");
@@ -48,14 +64,19 @@ app.use(status);
 app.use(flash());
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.bodyParser({limit: '50mb'}));
+app.use(bodyParser.urlencoded({
+  extended: true,
+  limit: '100mb',
+  parameterLimit: 1000000
+}));
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    cookie: { maxAge: oneDay },
+    cookie: {
+      maxAge: oneDay
+    },
     saveUninitialized: true,
   })
 );
@@ -79,17 +100,16 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.post("/upload", (req, res) => {
-  const image = req.body
-  console.log("REQUEST: ", req.body)
+app.post("/upload", parser.single('uploaded_file'), (req, res) => {
+  const file = req.file;
+  // SAVE FILE PATH IN DB
+  console.log(req)
+  
+  cloudinary.uploader.upload(file.path, {
+    folder: 'projecten'
+  })
 
-  // var cloudinary = require('cloudinary')
-  // cloudinary.uploader.upload("my_picture.jpg",
-  //     function (result) {
-  //         console.log(result)
-  //     })
-
-  res.send("Ok")
+  res.send('OK')
 });
 
 app.listen(port, () => {
