@@ -4,7 +4,7 @@ const passport = require("passport");
 
 
 router.post('/', 
-  passport.authenticate('local', { failureMessage: '/login', failureFlash: true ,successFlash: 'You succesfully logged in!'}),
+  passport.authenticate('local', { failureMessage: 'You have nog been logged in', failureFlash: true ,successFlash: 'You have succesfully logged in!'}),
   function(req, res) {
     res.send(req.session)
   });
