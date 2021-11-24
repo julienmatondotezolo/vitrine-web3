@@ -122,3 +122,9 @@ const logout = require("./routes/auth/logout");
 app.use("/register", register);
 app.use("/login", login);
 app.use("/logout", logout);
+
+
+const Googlelogin = require("./routes/auth/google/login");
+const Googlelogout = require("./routes/auth/google/logout");
+app.use("/google/login", Googlelogin);
+app.use("/google/logout", Googlelogout);
