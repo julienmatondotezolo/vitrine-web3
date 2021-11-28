@@ -32,38 +32,50 @@ module.exports = async function (passport) {
   passport.use(
     new GoogleStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        clientID:
+          "5863592506-2o7kg34d1dqssdbrqi8nkdq1tibajdcq.apps.googleusercontent.com",
+        clientSecret: "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",
         callbackURL: "http://localhost:3000/google/login/callback",
         passReqToCallback: true,
       },
-
-      async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
+      async (request, accessToken, refreshToken, profile, done) => {
+        console.log("------- profile", profile);
         const newUser = {
-          userid: profile.id,
+          email: profile.emails[0].value,
+          password: profile.id,
           username: profile.displayName,
           //firstName: profile.name.givenName,
           //lastName: profile.name.familyName,
           avatar: profile.photos[0].value,
-          password: "googleAccount",
+        
         };
 
-        try {
-          let user = pool.query(
-            `SELECT * FROM users where userid = '${profile.id}'`
-          );
-          if (user) {
-            done(null, user);
-          } else {
-            const createUser = await pool.query(
-              "INSERT INTO users(email, password, username) VALUES($1, $2, $3) RETURNING *",
-              newUser
-            );
-            done(null, user);
-          }
+        const values = Object.values(newUser);
+                try {
+          console.log("the email "+profile.emails[0].value)
+          let user = pool
+            .query(
+              `SELECT * FROM users where email = '${profile.emails[0].value}'`
+            )
+            .then(async(user) => {
+              console.log('the user detail '+ JSON.stringify(user))
+              if (user.rows[0]) {
+                done(null, user.rows[0]);
+              } else {
+                try{
+                const createUser = await pool.query(
+                  "INSERT INTO users(email, password,username,avatar) VALUES($1, $2, $3,$4) RETURNING *",
+                  values
+                );
+                done(null, values);
+                }catch(err){
+                  console.log("the insert error" +err)
+                }
+                
+              }
+            });
         } catch (err) {
-          console.error(err);
+          console.error("the error " + err);
         }
       }
     )
