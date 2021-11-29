@@ -5,8 +5,16 @@ const pool = require("../../db/db");
 router.post("/", async (req, res) => {
   let { projectName, description, url, images, cluster } = req.body;
   let userId = req.session.passport.user.userid;
+  const file = req.file;
+  let values = [projectName, description, url, file.path, cluster, userId];
 
-  let values = [projectName, description, url, images, cluster, userId];
+  // SAVE FILE PATH IN DB
+  console.log(req.file.path);
+
+  cloudinary.uploader.upload(file.path, {
+    folder: "projecten",
+    chunk_size: 6000000,
+  });
 
   if (check(cluster)) {
     try {

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../../db/db");
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     let userid = 1; /*req.user.userid*/
 

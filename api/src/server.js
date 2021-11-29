@@ -14,31 +14,29 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const status = require("./routes/status/status");
 
-const multer = require('multer');
-const cloudinary = require('cloudinary').v2
-const {
-  CloudinaryStorage
-} = require('multer-storage-cloudinary');
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 // const cloudinary = require('cloudinary')
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true
+  secure: true,
 });
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'projecten',
+    folder: "projecten",
   },
 });
 
 const parser = multer({
-  storage: storage
+  storage: storage,
 });
 
-// const uploadImage = require("./routes/projects/upload"); 
+// const uploadImage = require("./routes/projects/upload");
 const getClusters = require("./routes/cluster/get-clusters");
 const getProjects = require("./routes/projects/get-projects");
 const getProjectByName = require("./routes/projects/get-project-by-name");
@@ -64,18 +62,20 @@ app.use(status);
 app.use(flash());
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({
-  extended: true,
-  limit: '100mb',
-  parameterLimit: 1000000
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+    limit: "100mb",
+    parameterLimit: 1000000,
+  })
+);
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
     cookie: {
-      maxAge: oneDay
+      maxAge: oneDay,
     },
     saveUninitialized: true,
   })
@@ -88,7 +88,7 @@ require("./routes/auth/passport")(passport);
 // app.use("/upload", uploadImage);
 app.use("/clusters", getClusters);
 app.use("/projects", getProjects);
-app.use("/project", createProject);
+app.use("/project", parser.single("uploaded_file"), createProject);
 app.use("/project/name", getProjectByName);
 app.use("/project/id", getProjectById);
 app.use("/project", deleteProject);
@@ -100,18 +100,18 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.post("/upload", parser.single('uploaded_file'), (req, res) => {
+app.post("/upload", parser.single("uploaded_file"), (req, res) => {
   const file = req.file;
 
   // SAVE FILE PATH IN DB
-  console.log(req.file.path)
+  console.log(req.file.path);
 
   cloudinary.uploader.upload(file.path, {
-      folder: 'projecten',
-      chunk_size: 6000000 
-    })
+    folder: "projecten",
+    chunk_size: 6000000,
+  });
 
-  res.send('OK')
+  res.send("OK");
 });
 
 app.listen(port, () => {
@@ -128,23 +128,21 @@ app.use("/likes", storeOrDestroyLike);
 app.use("/favorite", getFavoritesByUser);
 app.use("/favorite", storeOrDestroyFavorite);
 
-const getUsers = require('./routes/users/get-users')
-const createUser = require('./routes/users/create-user')
-const getUserByid = require('./routes/users/get-user-by-id')
+const getUsers = require("./routes/users/get-users");
+const createUser = require("./routes/users/create-user");
+const getUserByid = require("./routes/users/get-user-by-id");
 
 app.use("/users/", getUsers);
 app.use("/user", createUser);
 app.use("/user/id", getUserByid);
 
-
-const register = require('./routes/auth/register')
+const register = require("./routes/auth/register");
 const login = require("./routes/auth/login");
 const logout = require("./routes/auth/logout");
 
 app.use("/register", register);
 app.use("/login", login);
 app.use("/logout", logout);
-
 
 const Googlelogin = require("./routes/auth/google/login");
 const Googlelogout = require("./routes/auth/google/logout");
