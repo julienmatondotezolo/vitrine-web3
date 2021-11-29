@@ -104,11 +104,10 @@ app.post("/upload", parser.single('uploaded_file'), (req, res) => {
   const file = req.file;
   // SAVE FILE PATH IN DB
 
-  console.log(JSON.stringify(req))
+  console.log(req.file)
 
   cloudinary.uploader.upload(file.path, {
       folder: 'projecten',
-      resource_type: "video", 
       chunk_size: 6000000 
     })
 
