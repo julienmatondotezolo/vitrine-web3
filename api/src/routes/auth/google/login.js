@@ -11,19 +11,18 @@ router.get(
 router.get(
   "/callback",
   passport.authenticate("google", {
-    failureRedirect: '/failed',
-
+    failureRedirect: "/failed",
+    session: true,
   }),
   function (req, res) {
-    res.redirect('/google/login/success')
-
-}
+    res.redirect("/google/login/success");
+  }
 );
 router.get("/failed", (req, res) => {
-  res.send("Failed")
-})
-router.get("/success",ensureAuthenticated,(req, res) => {
-  res.send(`Welcome ${JSON.stringify(req.session)}`)
-})
+  res.send("Failed");
+});
+router.get("/success", ensureAuthenticated, (req, res) => {
+  res.send(`Welcome ${JSON.stringify(req.session)}`);
+});
 
 module.exports = router;
