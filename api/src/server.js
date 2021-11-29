@@ -49,6 +49,8 @@ app.use(
     resave: false,
     cookie: { maxAge: oneDay },
     saveUninitialized: true,
+    sameSite: "none",
+
   })
 );
 app.use(passport.initialize());
