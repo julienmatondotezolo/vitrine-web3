@@ -88,10 +88,12 @@ app.use("/favorite", storeOrDestroyFavorite);
 const getUsers = require('./routes/users/get-users')
 const createUser = require('./routes/users/create-user')
 const getUserByid = require('./routes/users/get-user-by-id')
+const getUpdateUser = require('./routes/users/update-user')
 
 app.use("/users/", getUsers);
 app.use("/user", createUser);
 app.use("/user/id", getUserByid);
+app.use("/user/update", ensureAuthenticated,getUpdateUser);
 
 
 const register = require('./routes/auth/register')
