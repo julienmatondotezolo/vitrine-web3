@@ -102,9 +102,9 @@ app.get("/", (req, res) => {
 
 app.post("/upload", parser.single('uploaded_file'), (req, res) => {
   const file = req.file;
-  // SAVE FILE PATH IN DB
 
-  console.log(req.file)
+  // SAVE FILE PATH IN DB
+  console.log(req.file.path)
 
   cloudinary.uploader.upload(file.path, {
       folder: 'projecten',
