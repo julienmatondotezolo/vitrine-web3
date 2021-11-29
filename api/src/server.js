@@ -99,10 +99,12 @@ app.use("/user/update", ensureAuthenticated,getUpdateUser);
 const register = require('./routes/auth/register')
 const login = require("./routes/auth/login");
 const logout = require("./routes/auth/logout");
+const profile = require("./routes/auth/profile");
 
 app.use("/register", register);
 app.use("/login", login);
 app.use("/logout", logout);
+app.use("/profile",ensureAuthenticated, profile);
 
 
 const Googlelogin = require("./routes/auth/google/login");
