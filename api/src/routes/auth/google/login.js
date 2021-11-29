@@ -14,7 +14,7 @@ router.get(
     session: true,
   }),
   function (req, res) {
-    res.redirect("/google/login/success");
+    res.redirect("/google/profile");
   }
 );
 router.get("/failed", (req, res) => {
