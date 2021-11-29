@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+const { ensureAuthenticated } = require("./routes/auth/ensureAuthenticated");
 
 const express = require("express");
 const app = express();
@@ -103,6 +104,8 @@ app.use("/logout", logout);
 
 
 const Googlelogin = require("./routes/auth/google/login");
+const GoogleProfile = require("./routes/auth/google/profile");
 const Googlelogout = require("./routes/auth/google/logout");
 app.use("/google/login", Googlelogin);
+app.use("/google/profile", ensureAuthenticated,GoogleProfile);
 app.use("/google/logout", Googlelogout);
