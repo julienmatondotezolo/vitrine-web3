@@ -47,7 +47,7 @@ const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: true,
+    resave: false,
     cookie: { maxAge: oneDay},
     saveUninitialized: true,
     cookie: {domain: 'https://vitrine-app-ehb.herokuapp.com'}
