@@ -34,8 +34,11 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
-app.use(cors());
+const corsOptions = {
+  origin: "https://vitrine-app-ehb.herokuapp.com/", // This is where you put the URL of your frontend
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(status);
 app.use(flash());
