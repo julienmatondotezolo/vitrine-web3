@@ -54,7 +54,8 @@ app.use(
     secret: process.env.SECRET,
     resave: true,
     cookie: {domain: 'https://vitrine-frontend-test.herokuapp.com', maxAge: oneDay,    httpOnly: true,
-      sameSite: 'none',},
+      sameSite: 'none',      secure: process.env.NODE_ENV == "production" ? true : false,
+    },
     saveUninitialized: true,
 
   })
