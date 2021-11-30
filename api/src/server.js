@@ -27,14 +27,14 @@ const getProjectsUser = require("./routes/projects/get-projects-user");
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'https://vitrine-frontend-test.herokuapp.com/signup');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
   next();
 });
 
 app.use(cors({
-  origin: ['https://vitrine-web3.herokuapp.com', 'https://vitrine-app-ehb.herokuapp.com'],
+  origin: ['https://vitrine-web3.herokuapp.com', 'https://vitrine-app-ehb.herokuapp.com','https://vitrine-frontend-test.herokuapp.com/signup'],
   credentials: true
 }));
 app.use(express.json());
@@ -50,7 +50,7 @@ app.use(
     resave: false,
     cookie: { maxAge: oneDay},
     saveUninitialized: true,
-    cookie: {domain: 'https://vitrine-app-ehb.herokuapp.com',secure:false}
+    cookie: {domain: 'https://vitrine-frontend-test.herokuapp.com/signup',secure:false}
 
   })
 );
