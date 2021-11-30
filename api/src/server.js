@@ -32,9 +32,10 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
   next();
 });
+app.options("*", cors({ origin: 'https://vitrine-frontend-test.herokuapp.com', optionsSuccessStatus: 200 }));
 
 app.use(cors({
-  origin: ['https://vitrine-frontend-test.herokuapp.com/','https://vitrine-web3.herokuapp.com/'],
+  origin: ['https://vitrine-frontend-test.herokuapp.com','https://vitrine-web3.herokuapp.com'],
   methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
   preflightContinue: false,
   credentials: true
@@ -78,7 +79,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.redirect("https://vitrine-frontend-test.herokuapp.com/");
+  res.redirect("https://vitrine-frontend-test.herokuapp.com");
 });
 
 app.listen(port, () => {
