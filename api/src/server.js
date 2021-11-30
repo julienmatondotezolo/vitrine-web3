@@ -76,7 +76,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.redirect("https://vitrine-app-ehb.herokuapp.com");
+  res.redirect("https://vitrine-frontend-test.herokuapp.com/signup");
 });
 
 app.listen(port, () => {
