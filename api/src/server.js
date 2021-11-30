@@ -75,6 +75,10 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
+app.get("/home", (req, res) => {
+  res.redirect("https://vitrine-app-ehb.herokuapp.com");
+});
+
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });
