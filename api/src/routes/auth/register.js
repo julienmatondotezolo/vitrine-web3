@@ -48,8 +48,7 @@ router.post("/", async (req, res) => {
       }
     }
    console.log('Your session '+JSON.stringify(req.session)); 
-   res.redirect('home')
-    //res.sendCustomStatus(200, "Succesfully registered");
+    res.sendCustomStatus(200, "Succesfully registered");
   }
 
   function checkCredentials(email, password, password2) {
@@ -98,7 +97,8 @@ router.get("/", (req, res) => {
     res.redirect("home");
     return;
   }
-  
+  console.log("you are trying to get register");
+
 });
 
 
