@@ -46,7 +46,7 @@ app.use(status);
 app.use(flash());
 
 app.use(cookieParser());
-app.enable('trust proxy'); // add this line
+app.set("trust proxy", 1);
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
