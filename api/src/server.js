@@ -10,6 +10,7 @@ const port = process.env.PORT || 3000;
 const pool = require("./db/db");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
@@ -45,12 +46,13 @@ app.use(status);
 app.use(flash());
 
 app.use(cookieParser());
+app.enable('trust proxy'); // add this line
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: false,
+    resave: true,
     cookie: { maxAge: oneDay,    httpOnly: true,
       sameSite: 'none',},
     saveUninitialized: true,
