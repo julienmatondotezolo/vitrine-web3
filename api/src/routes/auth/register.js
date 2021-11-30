@@ -94,7 +94,7 @@ router.post("/", async (req, res) => {
 });
 router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
-    res.redirect("home");
+    res.send(req.session);
     return;
   }
   console.log("you are trying to get register");
