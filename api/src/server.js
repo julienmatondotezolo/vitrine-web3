@@ -33,7 +33,10 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://vitrine-web3.herokuapp.com', 'https://vitrine-app-ehb.herokuapp.com'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(status);
 app.use(flash());
@@ -44,10 +47,10 @@ const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
     secret: process.env.SECRET,
-    resave: false,
+    resave: true,
     cookie: { maxAge: oneDay},
     saveUninitialized: true,
-   
+    cookie: {domain: 'https://vitrine-app-ehb.herokuapp.com'}
 
   })
 );
