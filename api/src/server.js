@@ -37,7 +37,7 @@ app.use(cors({
   allowedHeaders: ['sessionId', 'Content-Type'],
   exposedHeaders: ['sessionId'],
   origin: ['https://vitrine-frontend-test.herokuapp.com','https://vitrine-web3.herokuapp.com'],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
   preflightContinue: false,
   credentials: true
 }));
