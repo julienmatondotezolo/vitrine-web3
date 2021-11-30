@@ -34,13 +34,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
-const corsOptions = {
-  credentials: true,
-  origin: ["https://vitrine-app-ehb.herokuapp.com"],
-  allowedHeaders: ["Content-Type","Authorization","X-Requested-With","X-Forwarded-Proto", "Cookie","Set-Cookie"],
-  exposedHeaders: ["Content-Type","Authorization","X-Requested-With","X-Forwarded-Proto","Cookie","Set-Cookie"]
-};
-app.use(cors(corsOptions));
+
+app.use(cors());
 app.use(express.json());
 app.use(status);
 app.use(flash());
@@ -52,8 +47,7 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    cookie: { maxAge: oneDay,
-      sameSite: "none" },
+    cookie: { maxAge: oneDay},
     saveUninitialized: true,
    
 
