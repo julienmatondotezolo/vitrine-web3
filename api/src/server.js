@@ -26,19 +26,14 @@ const updateProject = require("./routes/projects/update-project");
 const getProjectsUser = require("./routes/projects/get-projects-user");
 
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "https://vitrine-app-ehb.herokuapp.com/");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
   next();
 });
-app.use(cors({
-  origin : 'https://vitrine-app-ehb.herokuapp.com/', 
-  credentials: true, // <= Accept credentials (cookies) sent by the client
-}))
+
+app.use(cors());
 app.use(express.json());
 app.use(status);
 app.use(flash());
