@@ -80,7 +80,7 @@ module.exports = async function (passport) {
   );
 
   passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user);
   });
 
   passport.deserializeUser(function (user, done) {
