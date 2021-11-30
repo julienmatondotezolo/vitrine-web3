@@ -42,7 +42,7 @@ app.use(status);
 app.use(flash());
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: true}));
+
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
@@ -50,12 +50,13 @@ app.use(
     resave: false,
     cookie: { maxAge: oneDay},
     saveUninitialized: true,
-    cookie: {domain: 'https://vitrine-app-ehb.herokuapp.com'}
+    cookie: {domain: 'https://vitrine-app-ehb.herokuapp.com',secure:false}
 
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 require("./routes/auth/passport")(passport);
 
