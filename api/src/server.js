@@ -74,7 +74,7 @@ app.use(
       domain: "https://vitrine-frontend-test.herokuapp.com",
       maxAge: oneDay,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "lax",
       secure: true,
     },
     saveUninitialized: true,
