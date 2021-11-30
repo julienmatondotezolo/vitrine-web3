@@ -51,7 +51,8 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    cookie: { maxAge: oneDay},
+    cookie: { maxAge: oneDay,    httpOnly: true,
+      sameSite: 'none',},
     saveUninitialized: true,
     cookie: {domain: 'https://vitrine-frontend-test.herokuapp.com',secure:false}
 
