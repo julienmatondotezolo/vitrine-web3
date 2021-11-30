@@ -92,6 +92,13 @@ router.post("/", async (req, res) => {
     return uppercaseName;
   }
 });
+router.get("/", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect("home");
+    return;
+  }
+  
+});
 
 
 module.exports = router;
