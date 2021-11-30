@@ -27,16 +27,14 @@ const getProjectsUser = require("./routes/projects/get-projects-user");
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', 'https://vitrine-frontend-test.herokuapp.com');
+  res.header('Access-Control-Allow-Origin', 'https://vitrine-frontend-test.herokuapp.com/');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
   next();
 });
 
 app.use(cors({
-  allowedHeaders: ['sessionId', 'Content-Type'],
-  exposedHeaders: ['sessionId'],
-  origin: ['https://vitrine-frontend-test.herokuapp.com','https://vitrine-web3.herokuapp.com'],
+  origin: ['https://vitrine-frontend-test.herokuapp.com/','https://vitrine-web3.herokuapp.com/'],
   methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
   preflightContinue: false,
   credentials: true
