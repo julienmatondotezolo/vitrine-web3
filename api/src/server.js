@@ -80,7 +80,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.redirect("https://www.youtube.com/");
+  res.redirect("https://vitrine-frontend-test.herokuapp.com/");
 });
 
 app.listen(port, () => {
