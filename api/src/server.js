@@ -34,7 +34,8 @@ const getProjectsUser = require("./routes/projects/get-projects-user");
 // });
 
 app.use(cors({
-  
+  allowedHeaders: ['sessionId', 'Content-Type'],
+  exposedHeaders: ['sessionId'],
   origin: ['https://vitrine-frontend-test.herokuapp.com','https://vitrine-web3.herokuapp.com'],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
