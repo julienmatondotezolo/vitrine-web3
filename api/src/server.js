@@ -16,7 +16,7 @@ const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const status = require("./routes/status/status");
 
-const uploadImage = require("./routes/projects/upload"); 
+const uploadImage = require("./routes/projects/upload");
 const getClusters = require("./routes/cluster/get-clusters");
 const getProjects = require("./routes/projects/get-projects");
 const getProjectByName = require("./routes/projects/get-project-by-name");
@@ -27,20 +27,37 @@ const updateProject = require("./routes/projects/update-project");
 const getProjectsUser = require("./routes/projects/get-projects-user");
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', 'https://vitrine-frontend-test.herokuapp.com/');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://vitrine-frontend-test.herokuapp.com/"
+  );
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
   next();
 });
-app.options("*", cors({ origin: 'https://vitrine-frontend-test.herokuapp.com', optionsSuccessStatus: 200 }));
+app.options(
+  "*",
+  cors({
+    origin: "https://vitrine-frontend-test.herokuapp.com",
+    optionsSuccessStatus: 200,
+  })
+);
 
-app.use(cors({
-  origin: ['https://vitrine-frontend-test.herokuapp.com','https://vitrine-web3.herokuapp.com'],
-  methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
-  preflightContinue: true,
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "https://vitrine-frontend-test.herokuapp.com",
+      "https://vitrine-web3.herokuapp.com",
+    ],
+    methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
+    preflightContinue: true,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(status);
 app.use(flash());
@@ -53,16 +70,19 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: true,
-    cookie: {domain: 'https://vitrine-frontend-test.herokuapp.com', maxAge: oneDay,    httpOnly: true,
-      sameSite: 'none',      secure: process.env.NODE_ENV == "production" ? true : false,
+    cookie: {
+      domain: "https://vitrine-frontend-test.herokuapp.com",
+      maxAge: oneDay,
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
     },
     saveUninitialized: true,
-
   })
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 require("./routes/auth/passport")(passport);
 
@@ -99,18 +119,17 @@ app.use("/likes", storeOrDestroyLike);
 app.use("/favorite", getFavoritesByUser);
 app.use("/favorite", storeOrDestroyFavorite);
 
-const getUsers = require('./routes/users/get-users')
-const createUser = require('./routes/users/create-user')
-const getUserByid = require('./routes/users/get-user-by-id')
-const getUpdateUser = require('./routes/users/update-user')
+const getUsers = require("./routes/users/get-users");
+const createUser = require("./routes/users/create-user");
+const getUserByid = require("./routes/users/get-user-by-id");
+const getUpdateUser = require("./routes/users/update-user");
 
 app.use("/users/", getUsers);
 app.use("/user", createUser);
 app.use("/user/id", getUserByid);
-app.use("/user/update", ensureAuthenticated,getUpdateUser);
+app.use("/user/update", ensureAuthenticated, getUpdateUser);
 
-
-const register = require('./routes/auth/register')
+const register = require("./routes/auth/register");
 const login = require("./routes/auth/login");
 const logout = require("./routes/auth/logout");
 const profile = require("./routes/auth/profile");
@@ -118,12 +137,11 @@ const profile = require("./routes/auth/profile");
 app.use("/register", register);
 app.use("/login", login);
 app.use("/logout", logout);
-app.use("/profile",ensureAuthenticated, profile);
-
+app.use("/profile", ensureAuthenticated, profile);
 
 const Googlelogin = require("./routes/auth/google/login");
 const GoogleProfile = require("./routes/auth/google/profile");
 const Googlelogout = require("./routes/auth/google/logout");
 app.use("/google/login", Googlelogin);
-app.use("/google/profile", ensureAuthenticated,GoogleProfile);
+app.use("/google/profile", ensureAuthenticated, GoogleProfile);
 app.use("/google/logout", Googlelogout);
