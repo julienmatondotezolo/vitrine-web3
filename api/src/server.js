@@ -34,7 +34,8 @@ app.use(function (req, res, next) {
 });
 
 app.use(cors({
-  origin: ['https://vitrine-web3.herokuapp.com', 'https://vitrine-app-ehb.herokuapp.com','https://vitrine-frontend-test.herokuapp.com'],
+  origin:'*',
+  //origin: ['https://vitrine-web3.herokuapp.com', 'https://vitrine-app-ehb.herokuapp.com','https://vitrine-frontend-test.herokuapp.com'],
   credentials: true
 }));
 app.use(express.json());
