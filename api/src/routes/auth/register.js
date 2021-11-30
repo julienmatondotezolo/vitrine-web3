@@ -48,7 +48,8 @@ router.post("/", async (req, res) => {
       }
     }
    console.log('Your session '+JSON.stringify(req.session)); 
-    res.sendCustomStatus(200, "Succesfully registered");
+   res.redirect('home')
+    //res.sendCustomStatus(200, "Succesfully registered");
   }
 
   function checkCredentials(email, password, password2) {
