@@ -66,7 +66,7 @@ router.put("/", async (req, res) => {
       banner,
       description
     ) {
-      let user_id = req.user.userid
+      let user_id = req.params.id
       console.log(user_id)
       let edit_date = new Date().toISOString().slice(0, 19).replace("T", " ");
 
