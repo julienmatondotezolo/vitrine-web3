@@ -118,10 +118,10 @@ const storeOrDestroyFavorite = require("./routes/favorites/storeOrDestroy");
 const getLikesByUser = require("./routes/likes/getByUser");
 const storeOrDestroyLike = require("./routes/likes/storeOrDestroy");
 
-app.use("/likes", getLikesByUser);
-app.use("/likes", storeOrDestroyLike);
-app.use("/favorite", getFavoritesByUser);
-app.use("/favorite", storeOrDestroyFavorite);
+app.use("/likes", ensureAuthenticated,getLikesByUser);
+app.use("/likes", ensureAuthenticated,storeOrDestroyLike);
+app.use("/favorite", ensureAuthenticated,getFavoritesByUser);
+app.use("/favorite", ensureAuthenticated,storeOrDestroyFavorite);
 
 const getUsers = require("./routes/users/get-users");
 const createUser = require("./routes/users/create-user");
@@ -130,7 +130,7 @@ const getUpdateUser = require("./routes/users/update-user");
 
 app.use("/users/", getUsers);
 app.use("/user", createUser);
-app.use("/user/id", getUserByid);
+app.use("/user/id", ensureAuthenticated,getUserByid);
 app.use("/user/update", ensureAuthenticated, getUpdateUser);
 
 const register = require("./routes/auth/register");
