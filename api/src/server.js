@@ -106,7 +106,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.send("https://www.vitrine-finalshow.be/");
+  res.redirect("https://www.vitrine-finalshow.be/");
 });
 
 
