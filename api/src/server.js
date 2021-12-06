@@ -131,8 +131,8 @@ const getUpdateUser = require("./routes/users/update-user");
 
 app.use("/users/", getUsers);
 app.use("/user", createUser);
-app.use("/user/id", ensureAuthenticated,getUserByid);
-app.use("/user/update", ensureAuthenticated, getUpdateUser);
+app.use("/user/id",getUserByid);
+app.use("/user/update", getUpdateUser);
 
 const register = require("./routes/auth/register");
 const login = require("./routes/auth/login");
@@ -142,11 +142,11 @@ const profile = require("./routes/auth/profile");
 app.use("/register", register);
 app.use("/login", login);
 app.use("/logout", logout);
-app.use("/profile", ensureAuthenticated, profile);
+app.use("/profile", profile);
 
 const Googlelogin = require("./routes/auth/google/login");
 const GoogleProfile = require("./routes/auth/google/profile");
 const Googlelogout = require("./routes/auth/google/logout");
 app.use("/google/login", Googlelogin);
-app.use("/google/profile", ensureAuthenticated, GoogleProfile);
+app.use("/google/profile", GoogleProfile);
 app.use("/google/logout", Googlelogout);
