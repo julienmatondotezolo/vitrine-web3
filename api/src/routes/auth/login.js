@@ -10,6 +10,7 @@ router.post('/',
 
 router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
+    console.log(req.session)
     res.send(req.session)
     return;
   }
