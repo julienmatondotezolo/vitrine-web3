@@ -37,7 +37,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.options('*', cors())  
 app.use(
   cors({
     origin: [
@@ -53,7 +52,6 @@ app.use(status);
 app.use(flash());
 
 app.use(cookieParser());
-app.set("trust proxy", 1);
 
 const sessionDBaccess = new sessionPool({
   // user: "qrucjvzwvowlfs",
@@ -143,7 +141,7 @@ const logout = require("./routes/auth/logout");
 const profile = require("./routes/auth/profile");
 
 app.use("/register", register);
-app.use("/login", login, cors());
+app.use("/login", login);
 app.use("/logout", logout);
 app.use("/profile", ensureAuthenticated, profile);
 
