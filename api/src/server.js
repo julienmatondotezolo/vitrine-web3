@@ -31,7 +31,7 @@ const getProjectsUser = require("./routes/projects/get-projects-user");
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", "http://www.vitrine-finalshow.be/");
+  res.header("Access-Control-Allow-Origin", "https://www.vitrine-finalshow.be/");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
   res.header("Access-Control-Allow-Headers","Origin, Content-Type, Authorization");
   next();
@@ -40,8 +40,8 @@ app.use(function (req, res, next) {
 app.use(
   cors({
     origin: [
-      "http://www.vitrine-finalshow.be/",
-      "http://api.vitrine-finalshow.be/",
+      "https://www.vitrine-finalshow.be/",
+      "https://api.vitrine-finalshow.be/",
     ],
     methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
     credentials: true,
@@ -77,10 +77,8 @@ app.use(
     resave: false,
     unset: "destroy",
     cookie: {
-      domain: "http://www.vitrine-finalshow.be/",
+      domain: "https://www.vitrine-finalshow.be/",
       maxAge: oneDay,
-      httpOnly: true,
-      sameSite: "Lax",
       secure: true,
     },
     saveUninitialized: false,
@@ -108,7 +106,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.redirect("http://www.vitrine-finalshow.be/");
+  res.redirect("https://www.vitrine-finalshow.be/");
 });
 
 app.listen(port, () => {
