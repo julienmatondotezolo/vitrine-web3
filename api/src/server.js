@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
     "Access-Control-Allow-Origin",
-    "https://vitrine-finalshow.be/"
+    "http://vitrine-finalshow.be/"
   );
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
   res.header(
@@ -45,7 +45,7 @@ app.use(function (req, res, next) {
 app.options(
   "*",
   cors({
-    origin: "https://vitrine-finalshow.be/",
+    origin: "http://vitrine-finalshow.be/",
     optionsSuccessStatus: 200,
   })
 );
@@ -53,8 +53,8 @@ app.options(
 app.use(
   cors({
     origin: [
-      "https://vitrine-finalshow.be/",
-      "https://api.vitrine-finalshow.be/",
+      "http://vitrine-finalshow.be/",
+      "http://api.vitrine-finalshow.be/",
     ],
     methods: "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH",
     preflightContinue: true,
@@ -91,7 +91,7 @@ app.use(
     resave: false,
     unset: 'destroy',
     cookie: {
-      domain: "https://vitrine-finalshow.be/",
+      domain: "http://vitrine-finalshow.be/",
       maxAge: oneDay,
       httpOnly: true,
       sameSite: "Lax",
@@ -122,7 +122,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.redirect("https://vitrine-finalshow.be/");
+  res.redirect("http://vitrine-finalshow.be/");
 });
 
 app.listen(port, () => {
