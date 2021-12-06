@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { ensureAuthenticated } = require("./../ensureAuthenticated");
 
 router.get(
   "/",
@@ -15,14 +14,11 @@ router.get(
     session: true,
   }),
   function (req, res) {
-    res.redirect("/google/login/success");
+    res.redirect("/google/profile");
   }
 );
 router.get("/failed", (req, res) => {
   res.send("Failed");
-});
-router.get("/success", ensureAuthenticated, (req, res) => {
-  res.send(`Welcome ${JSON.stringify(req.session)}`);
 });
 
 module.exports = router;
