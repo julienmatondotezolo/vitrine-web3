@@ -9,8 +9,8 @@ const cors = require("cors");
 const port = process.env.PORT || 3000;
 const pool = require("./db/db");
 const session = require("express-session");
-const pgSession = require("connect-pg-simple")(session);
-const sessionPool = require("pg").Pool;
+// const pgSession = require("connect-pg-simple")(session);
+// const sessionPool = require("pg").Pool;
 
 const cookieParser = require("cookie-parser");
 
@@ -53,26 +53,26 @@ app.use(flash());
 
 app.use(cookieParser());
 
-const sessionDBaccess = new sessionPool({
-  // user: "qrucjvzwvowlfs",
-  // password: "2210978d2cf983a3c38894effb0e245e0866f4dde585ec11cc4ea59b129fd835",
-  // host:"ec2-54-171-25-232.eu-west-1.compute.amazonaws.com",
-  // port: "5432",
-  // database: "ddo8518ajthv3s",
-  connectionString:
-    "PostgreSQL://qrucjvzwvowlfs:2210978d2cf983a3c38894effb0e245e0866f4dde585ec11cc4ea59b129fd835@ec2-54-171-25-232.eu-west-1.compute.amazonaws.com/ddo8518ajthv3s?statusColor=&enviroment=production&name=vitrine_backend&tLSMode=0&usePrivateKey=false&safeModeLevel=0&advancedSafeModeLevel=0&driverVersion=0",
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+// const sessionDBaccess = new sessionPool({
+//   // user: "qrucjvzwvowlfs",
+//   // password: "2210978d2cf983a3c38894effb0e245e0866f4dde585ec11cc4ea59b129fd835",
+//   // host:"ec2-54-171-25-232.eu-west-1.compute.amazonaws.com",
+//   // port: "5432",
+//   // database: "ddo8518ajthv3s",
+//   connectionString:
+//     "PostgreSQL://qrucjvzwvowlfs:2210978d2cf983a3c38894effb0e245e0866f4dde585ec11cc4ea59b129fd835@ec2-54-171-25-232.eu-west-1.compute.amazonaws.com/ddo8518ajthv3s?statusColor=&enviroment=production&name=vitrine_backend&tLSMode=0&usePrivateKey=false&safeModeLevel=0&advancedSafeModeLevel=0&driverVersion=0",
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// });
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
-    store: new pgSession({
-      pool: sessionDBaccess,
-      tableName: "session",
-    }),
+    // store: new pgSession({
+    //   pool: sessionDBaccess,
+    //   tableName: "session",
+    // }),
     secret: process.env.SECRET,
     resave: false,
     unset: "destroy",
@@ -105,9 +105,6 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-app.get("/home", (req, res) => {
-  res.redirect("https://www.vitrine-finalshow.be/");
-});
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
