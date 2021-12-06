@@ -74,14 +74,14 @@ app.use(
     //   tableName: "session",
     // }),
     secret: process.env.SECRET,
-    resave: false,
+    resave: true,
     unset: "destroy",
     cookie: {
       domain: "https://www.vitrine-finalshow.be/",
       maxAge: oneDay,
       secure: true,
     },
-    saveUninitialized: false,
+    saveUninitialized: true,
   })
 );
 app.use(passport.initialize());
@@ -103,6 +103,10 @@ app.use("/projects-user", getProjectsUser);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
+});
+
+app.get("/home", (req, res) => {
+  res.send("https://www.vitrine-finalshow.be/");
 });
 
 
