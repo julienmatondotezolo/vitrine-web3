@@ -33,7 +33,10 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Origin", "https://www.vitrine-finalshow.be");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
-  res.header("Access-Control-Allow-Headers","Origin, Content-Type, Authorization");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type, Authorization"
+  );
   next();
 });
 
@@ -109,7 +112,6 @@ app.get("/home", (req, res) => {
   res.redirect("https://www.vitrine-finalshow.be/");
 });
 
-
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });
@@ -119,10 +121,10 @@ const storeOrDestroyFavorite = require("./routes/favorites/storeOrDestroy");
 const getLikesByUser = require("./routes/likes/getByUser");
 const storeOrDestroyLike = require("./routes/likes/storeOrDestroy");
 
-app.use("/likes", ensureAuthenticated,getLikesByUser);
-app.use("/likes", ensureAuthenticated,storeOrDestroyLike);
-app.use("/favorite", ensureAuthenticated,getFavoritesByUser);
-app.use("/favorite", ensureAuthenticated,storeOrDestroyFavorite);
+app.use("/likes", ensureAuthenticated, getLikesByUser);
+app.use("/likes", ensureAuthenticated, storeOrDestroyLike);
+app.use("/favorite", ensureAuthenticated, getFavoritesByUser);
+app.use("/favorite", ensureAuthenticated, storeOrDestroyFavorite);
 
 const getUsers = require("./routes/users/get-users");
 const createUser = require("./routes/users/create-user");
@@ -131,7 +133,7 @@ const getUpdateUser = require("./routes/users/update-user");
 
 app.use("/users/", getUsers);
 app.use("/user", createUser);
-app.use("/user/id",getUserByid);
+app.use("/user/id", getUserByid);
 app.use("/user/update", getUpdateUser);
 
 const register = require("./routes/auth/register");
