@@ -3,14 +3,15 @@ const router = express.Router();
 const passport = require("passport");
 
 router.post('/', 
-  passport.authenticate('local', { failureMessage: 'You have nog been logged in', failureFlash: true ,successFlash: 'You have succesfully logged in!'}),
+  passport.authenticate('local', { failureMessage: 'You have nog been logged in', failureFlash: true ,successFlash: 'You have succesfully logged in!',session:true}),
   function(req, res) {
-    console.log(JSON.stringify(req.session))
+    console.log("PASSPORT SESSION: ", req.session)
     res.send(req.session)
   });
 
 router.get("/", (req, res) => {
   if (req.isAuthenticated()) {
+    console.log(req.session)
     res.send(req.session)
     return;
   }
