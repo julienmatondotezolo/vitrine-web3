@@ -37,6 +37,7 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.options('*', cors())  
 app.use(
   cors({
     origin: [
@@ -142,7 +143,7 @@ const logout = require("./routes/auth/logout");
 const profile = require("./routes/auth/profile");
 
 app.use("/register", register);
-app.use("/login", login);
+app.use("/login", login, cors());
 app.use("/logout", logout);
 app.use("/profile", ensureAuthenticated, profile);
 
