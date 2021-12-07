@@ -20,6 +20,7 @@ module.exports = async function (passport) {
             if (err) throw err;
 
             if (isMatch) {
+              console.log("passport HERE "+ JSON.stringify(user.rows[0]))
               return done(null, user.rows[0]);
             } else {
               return done(null, false, { message: "pass incorrect" });

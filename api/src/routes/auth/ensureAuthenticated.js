@@ -1,11 +1,10 @@
 module.exports = {
   ensureAuthenticated: function (req, res, next) {
-    console.log("AUTH USER: ", req.session)
-    console.log(req.isAuthenticated());
-    
     if (req.isAuthenticated()) {
       return next();
+    } else {
+      console.log('Your are not logged in')
+      res.sendCustomStatus(401);
     }
-    res.sendCustomStatus(401, "Please log in");
   },
 };
