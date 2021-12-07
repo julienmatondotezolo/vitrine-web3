@@ -23,33 +23,53 @@ const parser = multer({
   storage: storage,
 });
 
-router.post("/", parser.single("uploaded_file"), async (req, res) => {
+router.post("/", parser.array("uploaded_file"), async (req, res) => {
   try {
-    let { name, description, url, images, cluster,userid } = req.body;
-    //let NewuserId = req.user.userid;
+    const file = req.files;
 
-    const file = req.file;
-    // SAVE FILE PATH IN DB
-    console.log(req.file);
-    // SAVE FILE PATH IN DB
-    console.log(req.file.path);
+    let { name, description, url, cluster } = req.body;
+    let newUserId = req.user ? 'req.user.userid' : 44
 
-    cloudinary.uploader.upload(images, {
-      folder: "projecten",
-      chunk_size: 6000000,
-    });
-                                                               //NewuserId
-    let values = [name, description, url, req.file.path, cluster, userid];
-    console.log("HERE are the value of projects " + values);
+    let values = [name, description, url, file[0].path, cluster, newUserId];
+
     const newProject = await pool.query(
-      "INSERT INTO projects(name, description, url, images, cluster_id,user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+      "INSERT INTO projects(name, description, url, images, cluster_id, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
       values
     );
-    res.sendCustomStatus(200);
+    
+    // ADD MOCKUP IMAGES TO DATABSE
+    let newProjectId = newProject.rows[0].projectid
+    if(newProjectId) {
+      addMockups(newProjectId, file)
+    }
+
+    console.log(`Project ${name} is succesfully uploaded !`)
+    res.sendCustomStatus(200, `Project ${name} is succesfully uploaded !`);
   } catch (err) {
     console.error(err.message);
-    res.sendCustomStatus(500);
+    res.sendCustomStatus(500, "Impossible to upload images.");
   }
 });
+
+// FUNCTION TO SAVE MOCKUPS IN DATABASE
+async function addMockups(projectId, images) {
+
+  for (let i = 1; i < images.length; i++) {
+    let values = [projectId, images[i].path];
+
+    const newMockup = await pool.query(
+      "INSERT INTO mockups(project_id, images) VALUES($1, $2) RETURNING *",
+      values
+    );
+
+    if(newMockup) {
+      console.log(`Mockup Image [${i}] is uploaded.`)
+    } else {
+      console.log(`Impossible to upload Mockup Image [${i}].`)
+    }
+  }
+
+
+}
 
 module.exports = router;
