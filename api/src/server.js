@@ -6,7 +6,7 @@ const { ensureAuthenticated } = require("./routes/auth/ensureAuthenticated");
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 const pool = require("./db/db");
 const session = require("express-session");
 // const pgSession = require("connect-pg-simple")(session);
@@ -83,7 +83,7 @@ require("./routes/auth/passport")(passport);
 
 app.use("/upload",ensureAuthenticated, uploadImage);
 app.use("/clusters", getClusters);
-app.use("/projects", getProjects);
+app.use("/projects",getProjects);
 app.use("/project", createProject);
 app.use("/project/name", getProjectByName);
 app.use("/project/id", getProjectById);
