@@ -84,7 +84,7 @@ require("./routes/auth/passport")(passport);
 app.use("/upload",ensureAuthenticated, uploadImage);
 app.use("/clusters", getClusters);
 app.use("/projects", getProjects);
-app.use("/project",ensureAuthenticated, createProject);
+app.use("/project", createProject);
 app.use("/project/name", getProjectByName);
 app.use("/project/id", getProjectById);
 app.use("/project", deleteProject);

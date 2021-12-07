@@ -25,8 +25,8 @@ const parser = multer({
 
 router.post("/", parser.single("uploaded_file"), async (req, res) => {
   try {
-    let { name, description, url, images, cluster } = req.body;
-    let NewuserId = req.user.userid;
+    let { name, description, url, images, cluster,userid } = req.body;
+    //let NewuserId = req.user.userid;
 
     const file = req.file;
     // SAVE FILE PATH IN DB
@@ -38,8 +38,8 @@ router.post("/", parser.single("uploaded_file"), async (req, res) => {
       folder: "projecten",
       chunk_size: 6000000,
     });
-
-    let values = [name, description, url, req.file.path, cluster, NewuserId];
+                                                               //NewuserId
+    let values = [name, description, url, req.file.path, cluster, userid];
     console.log("HERE are the value of projects " + values);
     const newProject = await pool.query(
       "INSERT INTO projects(name, description, url, images, cluster_id,user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
