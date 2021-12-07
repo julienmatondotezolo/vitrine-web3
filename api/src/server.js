@@ -82,15 +82,14 @@ app.use(bodyParser.urlencoded({
 require("./routes/auth/passport")(passport);
 
 app.use("/upload",ensureAuthenticated, uploadImage);
-app.use("/clusters", getClusters);
+app.use("/clusters", getClusters); 
 app.use("/projects",getProjects);
-app.use("/project", createProject);
-app.use("/project/name", getProjectByName);
+app.use("/project", createProject); 
+app.use("/project/name", getProjectByName); 
 app.use("/project/id", getProjectById);
 app.use("/project", deleteProject);
-app.use("/project", updateProject);
-app.use("/project", updateProject);
-app.use("/projects-user", getProjectsUser);
+app.use("/project",ensureAuthenticated ,updateProject);
+app.use("/projects-user",ensureAuthenticated, getProjectsUser);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -122,7 +121,7 @@ const getUpdateUser = require("./routes/users/update-user");
 app.use("/users/", getUsers);
 app.use("/user", createUser);
 app.use("/user/id", getUserByid);
-app.use("/user/update", getUpdateUser);
+app.use("/user/update", ensureAuthenticated,getUpdateUser);
 
 const register = require("./routes/auth/register");
 const login = require("./routes/auth/login");

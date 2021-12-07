@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../../db/db");
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    let userid = 1; /*req.user.userid*/
-
+    let userid = req.user.userid;
+    console.log('user here '+req.user.userid)
     const selectedProjectsSQL = await pool.query(
       `SELECT * FROM projects where user_id = $1`,
       [userid]

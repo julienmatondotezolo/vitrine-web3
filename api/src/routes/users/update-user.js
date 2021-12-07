@@ -67,7 +67,8 @@ router.put("/", async (req, res) => {
       description
     ) {
       let user_id = req.session.passport.user.userid;
-      console.log(user_id)
+
+      console.log("THE USER INFO "+user_id)
       let edit_date = new Date().toISOString().slice(0, 19).replace("T", " ");
 
       const updateUser = await pool.query(
