@@ -66,8 +66,8 @@ router.put("/", async (req, res) => {
       banner,
       description
     ) {
-      let user_id = req.session.passport.user.userid;
-      console.log(user_id)
+      console.log("USER ID FROM REQ:", req.user)
+      let user_id = req.user.userid
       let edit_date = new Date().toISOString().slice(0, 19).replace("T", " ");
 
       const updateUser = await pool.query(
@@ -84,16 +84,14 @@ router.put("/", async (req, res) => {
           user_id
         ]
       );
-
-      res
-        .status(200).send( `The user with id ${user_id} is updated! Code: ${res.statusCode} ` );
+      res.sendCustomStatus(200, `Hi ${username} your account has been updated!`);
     }
 
     function checkCredentials(username, email, password, password2) {
       let errors = [];
-      console.log(
-        " username:" + username + " email :" + email + " pass:" + password
-      );
+      // console.log(
+      //   " username:" + username + " email :" + email + " pass:" + password
+      // );
       if (!username || !email || !password || !password2) {
         errors.push({ msg: "Please fill in all fields" });
       }
@@ -116,7 +114,7 @@ router.put("/", async (req, res) => {
       return true;
     }
   } catch (err) {
-    res.sendCustomStatus(400);
+    res.sendCustomStatus(400, err);
   }
 });
 
