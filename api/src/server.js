@@ -1,7 +1,9 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-const { ensureAuthenticated } = require("./routes/auth/ensureAuthenticated");
+const {
+  ensureAuthenticated
+} = require("./routes/auth/ensureAuthenticated");
 
 const express = require("express");
 const app = express();
@@ -31,7 +33,8 @@ const getProjectsUser = require("./routes/projects/get-projects-user");
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
- res.header("Access-Control-Allow-Origin", "https://www.vitrine-finalshow.be");
+  // res.header("Access-Control-Allow-Origin", "https://www.vitrine-finalshow.be");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH");
   res.header(
     "Access-Control-Allow-Headers",
@@ -59,7 +62,7 @@ app.use(cookieParser());
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(
   session({
-    secret:"secret",
+    secret: "secret",
     resave: true,
     unset: "destroy",
     // cookie: {
@@ -81,7 +84,7 @@ app.use(bodyParser.urlencoded({
 }));
 require("./routes/auth/passport")(passport);
 
-app.use("/upload",ensureAuthenticated, uploadImage);
+app.use("/upload", ensureAuthenticated, uploadImage);
 app.use("/clusters", getClusters);
 app.use("/projects", getProjects);
 app.use("/project", createProject);

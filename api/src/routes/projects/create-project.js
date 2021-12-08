@@ -24,11 +24,12 @@ const parser = multer({
 });
 
 router.post("/", parser.array("uploaded_file"), async (req, res) => {
+  console.log(req.body)
   try {
     const file = req.files;
 
     let { name, description, url, cluster } = req.body;
-    let newUserId = req.user ? 'req.user.userid' : 44
+    let newUserId = req.user ? req.user : 44
 
     let values = [name, description, url, file[0].path, cluster, newUserId];
 
@@ -68,7 +69,6 @@ async function addMockups(projectId, images) {
       console.log(`Impossible to upload Mockup Image [${i}].`)
     }
   }
-
 
 }
 
