@@ -25,6 +25,7 @@ const parser = multer({
 
 router.post("/", parser.array("uploaded_file"), async (req, res) => {
   console.log(req.body)
+  console.log(req.files)
   try {
     const file = req.files;
 
