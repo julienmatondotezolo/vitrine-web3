@@ -36,7 +36,7 @@ module.exports = async function (passport) {
         clientID:
           "5863592506-2o7kg34d1dqssdbrqi8nkdq1tibajdcq.apps.googleusercontent.com",
         clientSecret: "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",
-        callbackURL: "https://api.vitrine-finalshow.be/google/login/callback",
+        callbackURL: "http://localhost:3000/google/login/callback",
         passReqToCallback: true,
       },
       async (request, accessToken, refreshToken, profile, done) => {

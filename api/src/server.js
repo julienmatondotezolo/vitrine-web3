@@ -133,11 +133,11 @@ const profile = require("./routes/auth/profile");
 app.use("/register", register);
 app.use("/login", login);
 app.use("/logout", logout);
-app.use("/profile", profile);
+app.use("/profile",ensureAuthenticated, profile);
 
 const Googlelogin = require("./routes/auth/google/login");
 const GoogleProfile = require("./routes/auth/google/profile");
 const Googlelogout = require("./routes/auth/google/logout");
 app.use("/google/login", Googlelogin);
-app.use("/google/profile", GoogleProfile);
+app.use("/google/profile",ensureAuthenticated, GoogleProfile);
 app.use("/google/logout", Googlelogout);
