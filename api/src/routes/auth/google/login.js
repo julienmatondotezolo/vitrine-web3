@@ -10,15 +10,10 @@ router.get(
 router.get(
   "/callback",
   passport.authenticate("google", {
-    failureRedirect: "/failed",
-    session: true,
-  }),
+  failureMessage: 'You have nog been logged in', failureFlash: true ,successFlash: 'You have succesfully logged in!',session:true}
+  ),
   function (req, res) {
-    res.redirect("/google/profile");
+    res.send(req.session)
   }
 );
-router.get("/failed", (req, res) => {
-  res.send("Failed");
-});
-
 module.exports = router;
