@@ -92,6 +92,14 @@ router.post("/", async (req, res) => {
     return uppercaseName;
   }
 });
+router.get("/", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.send(req.session);
+    return;
+  }
+  console.log("you are trying to get register");
+
+});
 
 
 module.exports = router;

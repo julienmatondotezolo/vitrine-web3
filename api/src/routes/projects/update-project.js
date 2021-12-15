@@ -5,16 +5,17 @@ const pool = require("../../db/db");
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { images, url, description, cluster, projectName } = req.body;
+    const { images, url, description, cluster, name } = req.body;
     const userId = req.session.passport.user.userid;
-    console.log(userId);
+    console.log("the user "+JSON.stringify(req.user));
+
     let edit_date = new Date().toISOString().slice(0, 19).replace("T", " ");
 
     const selectedProjectSQL = await pool.query(
       "SELECT * FROM projects where projectid = $1",
       [id]
     ); // Search the project that you want to update
-
+  console.log('project user '+ JSON.stringify(selectedProjectSQL.rows[0]))
     // Check to see if the project that you want to update is yours (you can't update other people's projects)
     if (selectedProjectSQL.rows.length) {
       if (
@@ -24,15 +25,15 @@ router.put("/:id", async (req, res) => {
         //  The project belongs to the logged user.
 
         const updateProduct = await pool.query(
-          "UPDATE projects SET user_id = $1, edit_date = $2, images = $3, url = $4,description = $5, cluster_id = $6,  name = $7 WHERE projectid = $8",
+          "UPDATE projects SET name= $1,description= $2,url= $3,images= $4,user_id = $5, cluster_id = $6, edit_date = $7 WHERE projectid = $8",
           [
-            userId,
-            edit_date,
-            images,
-            url,
+            name,
             description,
+            url,
+            images,
+            userId,
             cluster,
-            projectName,
+            edit_date,
             id,
           ]
         );
@@ -42,8 +43,8 @@ router.put("/:id", async (req, res) => {
           `The project "${selectedProjectSQL.rows[0].name}" with id ${id} is updated!!`
         );
       } else {
-        //  The project does not exists or don't belongs to the logged user.
-        res.sendCustomStatus(400);
+
+        res.sendCustomStatus(400,"The project does not exists or don't belongs to the logged user");
       }
     } else {
       res.sendCustomStatus(400, "Project doesn't exists.");

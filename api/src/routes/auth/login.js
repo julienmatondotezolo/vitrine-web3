@@ -2,27 +2,24 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-
 router.post('/', 
-  passport.authenticate('local', { failureMessage: 'You have nog been logged in', failureFlash: true ,successFlash: 'You have succesfully logged in!'}),
+  passport.authenticate('local', { failureMessage: 'You have nog been logged in', failureFlash: true ,successFlash: 'You have succesfully logged in!',session:true}),
   function(req, res) {
-    console.log(JSON.stringify(req.session))
+    console.log("PASSPORT SESSION: ", req.session)
     res.send(req.session)
   });
+
+router.get("/", (req, res) => {
+  if (req.isAuthenticated()) {
+    console.log(req.session)
+    res.send(req.session)
+    return;
+  }
+
+  res.sendCustomStatus(400);
+});
 
 router.get("/error", (req, res) => {
   res.sendCustomStatus(400);
 });
-
-router.get('/', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.send("your user does not exist"); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.send({session:req.session});
-    });
-  })(req, res, next);
-});
-
 module.exports = router;

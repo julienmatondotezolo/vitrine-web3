@@ -6,17 +6,17 @@ router.post("/", async (req, res) => {
   let { projectId } = req.body;
   let userId = req.session.passport.user.userid;
   // let values = [projectId, userId];
-
+    console.log(projectId+userId)
   if (await check(projectId, userId)) {
     try {
       const likeProject = await pool.query(
         "INSERT INTO likes(project_id, user_id) VALUES($1, $2) RETURNING *",
         [projectId, userId]
       );
-      res.send("Like added"); // res.sendCustomStatus(200, "Like added");
+      res.sendCustomStatus(200, "Like added");
     } catch (err) {
       console.error(err.message);
-      res.send("Error : " + err); // res.sendCustomStatus(500);
+     res.sendCustomStatus(500,err.message);
     }
   }
 

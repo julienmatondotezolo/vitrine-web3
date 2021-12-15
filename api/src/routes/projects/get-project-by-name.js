@@ -9,7 +9,7 @@ router.get("/:name", async (req, res) => {
     const selectedFinalWorkSQL = await pool.query(
       `SELECT * FROM projects where name = '${selectedFinalWork}'`
     );
-
+    console.log(selectedFinalWorkSQL.rows)
     res.status(200).json(selectedFinalWorkSQL.rows);
   } catch (err) {
     console.error(err.message);

@@ -20,6 +20,7 @@ module.exports = async function (passport) {
             if (err) throw err;
 
             if (isMatch) {
+              console.log("passport HERE "+ JSON.stringify(user.rows[0]))
               return done(null, user.rows[0]);
             } else {
               return done(null, false, { message: "pass incorrect" });
@@ -35,7 +36,7 @@ module.exports = async function (passport) {
         clientID:
           "5863592506-2o7kg34d1dqssdbrqi8nkdq1tibajdcq.apps.googleusercontent.com",
         clientSecret: "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",
-        callbackURL: "https://vitrine-web3.herokuapp.com/google/login/callback",
+        callbackURL: "https://api.vitrine-finalshow.be/google/login/callback",
         passReqToCallback: true,
       },
       async (request, accessToken, refreshToken, profile, done) => {
